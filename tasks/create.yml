@@ -1,8 +1,14 @@
 ---
 - name: Check if certificate already exists.
   stat:
-    path: '/etc/letsencrypt/live/{{ cert_item.domains | first | replace("*.", "") }}/cert.pem'
+    path: '{{ certbot_certs_dir }}/live/{{ cert_item.domains | first | replace("*.", "") }}/cert.pem'
   register: letsencrypt_cert
+
+- name: Fix LetsEncrypt folder permissions
+  file:
+    path: '{{ certbot_certs_dir }}'
+    owner: '{{ certbot_docker_enabled | ternary("dockremap", "root") }}'
+    recurse: true
 
 - when: not letsencrypt_cert.stat.exists
   block:
@@ -13,7 +19,7 @@
       with_items: "{{ certbot_create_standalone_stop_services }}"
 
     - name: Generate new certificate if one doesn't exist.
-      command: '{{ certbot_create_command }}'
+      command: '{{ certbot_entrypoint }} {{ certbot_create_arguments }}'
 
     - name: Start services after cert has been generated.
       service:

@@ -1,13 +1,7 @@
 ---
-# Certbot auto-renew cron job configuration (for certificate renewals).
-certbot_auto_renew: true
-certbot_auto_renew_user: 'www-data'
-certbot_auto_renew_frequency: 'daily'
-certbot_auto_renew_timeout_sec: 120
-certbot_auto_renew_options: '--quiet --no-self-upgrade'
-
 # Parameters used when creating new Certbot certs.
 certbot_admin_email: 'email@example.com'
+certbot_certs_dir: '/etc/letsencrypt'
 certbot_certs: []
 # - domains:
 #     - example1.com
@@ -15,8 +9,9 @@ certbot_certs: []
 # - domains:
 #     - example3.com
 
-certbot_create_command: >-
-  certbot certonly --standalone --noninteractive --agree-tos
+certbot_entrypoint: '/usr/bin/certbot'
+certbot_create_arguments: >-
+  certonly --standalone --noninteractive --agree-tos
   --email {{ certbot_admin_email }}
   -d {{ cert_item.domains | join(',') }}
 
@@ -24,5 +19,13 @@ certbot_create_standalone_stop_services:
   - nginx
   # - apache
 
-# Where to put Certbot when installing from source.
-certbot_dir: /opt/certbot
+# Use docker container to manage certificates.
+certbot_docker_enabled: false
+certbot_docker_cont_name: 'certbot'
+certbot_docker_cont_tag: 'v1.15.0'
+certbot_docker_cont_image: 'certbot/certbot:{{ certbot_docker_cont_tag }}'
+
+# Certbot auto-renew cron job configuration (for certificate renewals).
+certbot_auto_renew: true
+certbot_auto_renew_frequency: 'daily'
+certbot_auto_renew_timeout_sec: 120
