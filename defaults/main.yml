@@ -30,5 +30,5 @@ certbot_docker_cont_image: 'certbot/certbot:{{ certbot_docker_cont_tag }}'
 
 # Certbot auto-renew cron job configuration (for certificate renewals).
 certbot_auto_renew: true
-certbot_auto_renew_frequency: 'daily'
+certbot_auto_renew_frequency: 'weekly'
 certbot_auto_renew_timeout_sec: 120
