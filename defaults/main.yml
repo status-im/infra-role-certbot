@@ -15,7 +15,7 @@ certbot_create_arguments: >-
   --email {{ certbot_admin_email }}
   -d {{ cert_item.domains | join(',') }}
 
-certbot_create_standalone_stop_services:
+certbot_services_to_stop:
   - nginx
   # - apache
 

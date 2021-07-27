@@ -10,10 +10,12 @@
     mode: 0755
     content: |
       #!/usr/bin/env bash
-      exec docker run -i --rm \
+      systemctl stop {{ certbot_services_to_stop | join(" ") }}
+      docker run -i --rm \
         --name='{{ certbot_docker_cont_name }}' \
         -v '{{ certbot_certs_dir }}:{{ certbot_certs_dir }}' \
         -p '80:80/tcp' -p '443:443/tcp' \
         '{{ certbot_docker_cont_image }}' \
         "$@"
+      systemctl start {{ certbot_services_to_stop | join(" ") }}
   when: certbot_docker_enabled

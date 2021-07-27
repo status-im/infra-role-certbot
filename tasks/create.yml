@@ -16,7 +16,7 @@
       service:
         name: '{{ item }}'
         state: stopped
-      with_items: "{{ certbot_create_standalone_stop_services }}"
+      with_items: '{{ certbot_services_to_stop }}'
 
     - name: Generate new certificate if one doesn't exist.
       command: '{{ certbot_entrypoint }} {{ certbot_create_arguments }}'
@@ -25,4 +25,4 @@
       service:
         name: '{{ item }}'
         state: started
-      with_items: '{{ certbot_create_standalone_stop_services }}'
+      with_items: '{{ certbot_services_to_stop }}'
