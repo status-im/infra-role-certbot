@@ -25,7 +25,7 @@ certbot_containers_to_stop: []
 # Use docker container to manage certificates.
 certbot_docker_enabled: false
 certbot_docker_cont_name: 'certbot'
-certbot_docker_cont_tag: 'v1.15.0'
+certbot_docker_cont_tag: 'v1.25.0'
 certbot_docker_cont_image: 'certbot/certbot:{{ certbot_docker_cont_tag }}'
 
 # Certbot auto-renew cron job configuration (for certificate renewals).
