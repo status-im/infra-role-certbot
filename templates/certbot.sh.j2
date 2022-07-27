@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # vim:ft=sh
-set -e
 
 function stop_services() {
 {% if (certbot_services_to_stop|length) > 0 %}
