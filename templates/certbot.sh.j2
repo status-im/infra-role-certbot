@@ -1,27 +1,6 @@
 #!/usr/bin/env bash
 # vim:ft=sh
-
-function stop_services() {
-{% if (certbot_services_to_stop|length) > 0 %}
-    systemctl stop {{ certbot_services_to_stop | join(" ") }}
-{% endif %}
-{% if (certbot_containers_to_stop|length) > 0 %}
-    docker stop {{ certbot_containers_to_stop | join(" ") }}
-{% endif %}
-}
-
-function start_services() {
-{% if (certbot_services_to_stop|length) > 0 %}
-    systemctl start {{ certbot_services_to_stop | join(" ") }}
-{% endif %}
-{% if (certbot_containers_to_stop|length) > 0 %}
-    docker start {{ certbot_containers_to_stop | join(" ") }}
-{% endif %}
-}
-
-trap start_services EXIT
-stop_services
-docker run -i --rm \
+exec docker run -i --rm \
   --name='{{ certbot_docker_cont_name }}' \
   -v '{{ certbot_certs_dir }}:{{ certbot_certs_dir }}' \
   -p '80:80/tcp' -p '443:443/tcp' \
