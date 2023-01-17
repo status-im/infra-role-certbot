@@ -5,7 +5,7 @@
     systemd_timer_name: 'certbot-renew'
     systemd_timer_description: 'LetsEncrypt certificate renewal via certbot.'
     systemd_timer_user: 'root'
-    systemd_timer_work_dir: '{{ certbot_certs_dir }}'
+    systemd_timer_work_dir: '{{ certbot_work_dir }}'
     systemd_timer_frequency: '{{ certbot_auto_renew_frequency }}'
     systemd_timer_timeout_sec: '{{ certbot_auto_renew_timeout_sec }}'
     systemd_timer_start_on_creation: false

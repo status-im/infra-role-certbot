@@ -1,14 +1,19 @@
 ---
 - name: Check if certificate already exists.
   stat:
-    path: '{{ certbot_certs_dir }}/live/{{ cert_item.domains | first | replace("*.", "") }}/cert.pem'
+    path: '{{ certbot_config_dir }}/live/{{ cert_item.domains | first | replace("*.", "") }}/cert.pem'
   register: letsencrypt_cert
 
 - name: Fix LetsEncrypt folder permissions
   file:
-    path: '{{ certbot_certs_dir }}'
-    owner: '{{ certbot_docker_enabled | ternary("dockremap", "root") }}'
+    path: '{{ item }}'
+    owner: '{{ certbot_docker_enabled | ternary(certbot_docker_cont_uid, "root") }}'
+    mode: 0750
     recurse: true
+  with_items:
+    - '{{ certbot_config_dir }}'
+    - '{{ certbot_work_dir }}'
+    - '{{ certbot_logs_dir }}'
 
 - when: not letsencrypt_cert.stat.exists
   block:
