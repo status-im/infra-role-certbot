@@ -41,3 +41,7 @@ certbot_docker_cont_uid: '10000' # dockremap
 certbot_auto_renew: true
 certbot_auto_renew_frequency: 'weekly'
 certbot_auto_renew_timeout_sec: 600
+certbot_auto_renew_restart: 'on-abnormal'
+certbot_auto_renew_restart_mode: 'direct'
+certbot_auto_renew_restart_delay: 60
+certbot_auto_renew_restart_retries: 3

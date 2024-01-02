@@ -2,14 +2,18 @@
 - name: Create certbot renewal timer
   include_role: name=systemd-timer
   vars:
-    systemd_timer_name: 'certbot-renew'
     systemd_timer_description: 'LetsEncrypt certificate renewal via certbot.'
+    systemd_timer_name: 'certbot-renew'
     systemd_timer_user: 'root'
-    systemd_timer_work_dir: '{{ certbot_work_dir }}'
-    systemd_timer_frequency: '{{ certbot_auto_renew_frequency }}'
-    systemd_timer_timeout_sec: '{{ certbot_auto_renew_timeout_sec }}'
+    systemd_timer_work_dir:         '{{ certbot_work_dir }}'
+    systemd_timer_frequency:        '{{ certbot_auto_renew_frequency }}'
+    systemd_timer_timeout_sec:      '{{ certbot_auto_renew_timeout_sec }}'
+    systemd_timer_restart:          '{{ certbot_auto_renew_restart }}'
+    systemd_timer_restart_mode:     '{{ certbot_auto_renew_restart_mode }}'
+    systemd_timer_restart_delay:    '{{ certbot_auto_renew_restart_delay }}'
+    systemd_timer_restart_retries:  '{{ certbot_auto_renew_restart_retries }}'
+    systemd_timer_script_path:      '{{ certbot_entrypoint }}'
     systemd_timer_start_on_creation: false
-    systemd_timer_script_path: '{{ certbot_entrypoint }}'
     systemd_timer_script_args: 'renew'
     systemd_timer_exec_start_pre: |
       {{ (["docker stop "]     | product(certbot_containers_to_stop) | map("join")) +
