@@ -1,6 +1,6 @@
 ---
 - name: Create certbot renewal timer
-  include_role: name=systemd-timer
+  include_role: name=infra-role-systemd-timer
   vars:
     systemd_timer_description: 'LetsEncrypt certificate renewal via certbot.'
     systemd_timer_name: 'certbot-renew'
