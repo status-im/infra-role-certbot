@@ -17,6 +17,7 @@ certbot_create_arguments: >-
   --standalone
   --noninteractive
   --agree-tos
+  --expand
   --config-dir={{ certbot_config_dir }}
   --work-dir={{ certbot_work_dir }}
   --logs-dir={{ certbot_logs_dir }}
