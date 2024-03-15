@@ -22,6 +22,7 @@ certbot_create_arguments: >-
   --work-dir={{ certbot_work_dir }}
   --logs-dir={{ certbot_logs_dir }}
   --email={{ certbot_admin_email }}
+  --cert-name={{ cert_item.domains[0] }}
   --domains={{ cert_item.domains | join(',') }}
 
 certbot_services_to_stop: []
