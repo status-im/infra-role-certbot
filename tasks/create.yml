@@ -21,8 +21,14 @@
     - name: Stop services to allow certbot to generate a cert.
       service:
         name: '{{ item }}'
-        state: stopped
+        state: 'stopped'
       with_items: '{{ certbot_services_to_stop }}'
+
+    - name: Stop contrainers to allow certbot to generate a cert.
+      docker_container:
+        name: '{{ item }}'
+        state: 'stopped'
+      with_items: '{{ certbot_containers_to_stop }}'
 
     - name: Generate new certificate if one doesn't exist.
       command: '{{ certbot_entrypoint }} {{ certbot_create_arguments }}'
@@ -30,5 +36,11 @@
     - name: Start services after cert has been generated.
       service:
         name: '{{ item }}'
-        state: started
+        state: 'started'
       with_items: '{{ certbot_services_to_stop }}'
+
+    - name: Start containers after cert has been generated.
+      docker_container:
+        name: '{{ item }}'
+        state: 'started'
+      with_items: '{{ certbot_containers_to_stop }}'
