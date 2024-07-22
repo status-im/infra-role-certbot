@@ -35,7 +35,7 @@ certbot_containers_to_stop: []
 # Use docker container to manage certificates.
 certbot_docker_enabled: false
 certbot_docker_cont_name: 'certbot'
-certbot_docker_cont_tag: 'v1.32.2'
+certbot_docker_cont_tag: 'v2.11.0'
 certbot_docker_cont_image: 'certbot/certbot:{{ certbot_docker_cont_tag }}'
 certbot_docker_cont_uid: '10000' # dockremap
 
