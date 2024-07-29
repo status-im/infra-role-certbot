@@ -47,3 +47,5 @@ certbot_auto_renew_restart: 'on-abnormal'
 certbot_auto_renew_restart_mode: 'direct'
 certbot_auto_renew_restart_delay: 60
 certbot_auto_renew_restart_retries: 3
+# certbot_auto_renew_user:
+certbot_auto_renew_group: '{{certbot_auto_renew_user | default(certbot_docker_cont_uid)}}'
