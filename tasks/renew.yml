@@ -14,7 +14,9 @@
     systemd_timer_restart_retries:  '{{ certbot_auto_renew_restart_retries }}'
     systemd_timer_script_path:      '{{ certbot_entrypoint }}'
     systemd_timer_start_on_creation: false
-    systemd_timer_script_args: 'renew'
+    systemd_timer_script_args: >-
+      renew
+      {% if certbot_debug_logs %}--debug{% endif %}
     systemd_timer_exec_start_pre: |
       {{ (["docker stop "]     | product(certbot_containers_to_stop) | map("join")) +
          (["systemctl stop "]  | product(certbot_services_to_stop)   | map("join")) }}

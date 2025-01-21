@@ -12,6 +12,7 @@ certbot_certs: []
 #     - example3.com
 
 certbot_entrypoint: '/usr/bin/certbot'
+certbot_debug_logs: false
 certbot_create_arguments: >-
   certonly
   --standalone
