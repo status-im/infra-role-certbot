@@ -1,5 +1,5 @@
 ---
-- import_tasks: install.yml
+- import_tasks: config.yml
 
 - include_tasks: create.yml
   with_items: '{{ certbot_certs }}'

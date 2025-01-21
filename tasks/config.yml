@@ -1,0 +1,19 @@
+---
+- name: Fix LetsEncrypt folder permissions
+  file:
+    path: '{{ item }}'
+    owner: '{{ certbot_docker_enabled | ternary(certbot_docker_cont_uid, "root") }}'
+    group: '{{ certbot_docker_enabled | ternary("dockremap", "root") }}'
+    mode: 0770
+    recurse: true
+  with_items:
+    - '{{ certbot_config_dir }}'
+    - '{{ certbot_work_dir }}'
+    - '{{ certbot_logs_dir }}'
+
+- name: Create docker wrapper for certbot
+  template:
+    src: 'certbot.sh.j2'
+    dest: '{{ certbot_entrypoint }}'
+    mode: 0755
+  when: certbot_docker_enabled
