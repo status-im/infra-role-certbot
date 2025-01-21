@@ -1,4 +1,7 @@
 ---
+certbot_user:     'certbot'
+certbot_user_uid: '{{ certbot_docker_host_uid }}'
+certbot_group:    'dockremap'
 # Parameters used when creating new Certbot certs.
 certbot_admin_email: 'email@example.com'
 certbot_config_dir: '/etc/letsencrypt'
@@ -33,12 +36,12 @@ certbot_services_to_stop: []
 certbot_containers_to_stop: []
 # - my-web-server
 
-# Use docker container to manage certificates.
-certbot_docker_enabled: false
+# We can't install it from snap.
 certbot_docker_cont_name: 'certbot'
 certbot_docker_cont_tag: 'v2.11.0'
 certbot_docker_cont_image: 'certbot/certbot:{{ certbot_docker_cont_tag }}'
 certbot_docker_cont_uid: '10000' # dockremap
+certbot_docker_host_uid: '{{ 100000 + certbot_docker_cont_uid | int }}'
 
 # Certbot auto-renew cron job configuration (for certificate renewals).
 certbot_auto_renew: true
@@ -48,5 +51,3 @@ certbot_auto_renew_restart: 'on-abnormal'
 certbot_auto_renew_restart_mode: 'direct'
 certbot_auto_renew_restart_delay: 60
 certbot_auto_renew_restart_retries: 3
-# certbot_auto_renew_user:
-certbot_auto_renew_group: '{{certbot_auto_renew_user | default(certbot_docker_cont_uid)}}'
