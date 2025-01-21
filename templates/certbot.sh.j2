@@ -9,7 +9,3 @@ exec docker run -i --rm \
   -p '80:80/tcp' -p '443:443/tcp' \
   '{{ certbot_docker_cont_image }}' \
   "$@"
-
-{% if certbot_auto_renew_user is defined %}
-chown -R {{ certbot_auto_renew_user }}:{{ certbot_auto_renew_group }} {{ certbot_config_dir }} 
-{% endif %}
