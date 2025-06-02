@@ -23,3 +23,6 @@
     systemd_timer_exec_start_post: |
       {{ (["docker start "]    | product(certbot_containers_to_stop) | map("join")) +
          (["systemctl start "] | product(certbot_services_to_stop)   | map("join")) }}
+    systemd_timer_exec_stop_post: |
+      {{ (["docker start "]    | product(certbot_containers_to_stop) | map("join")) +
+         (["systemctl start "] | product(certbot_services_to_stop)   | map("join")) }}
