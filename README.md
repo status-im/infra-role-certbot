@@ -18,7 +18,7 @@ certbot_auto_renew_user: 'www-data'
 certbot_auto_renew_frequency: 'daily'
 certbot_auto_renew_options: "--quiet --no-self-upgrade"
 certbot_certs:
-  - domains: 'something.example.org'
+  - domains: ['something.example.org']
 ```
 
 The email address used to agree to Let's Encrypt's TOS and subscribe to cert-related notifications. This should be customized and set to an email address that you or your organization regularly monitors.
@@ -29,8 +29,10 @@ By default, this role configures a systemd timer to run under the provided user 
 
 Services that should be stopped while `certbot` runs it's own standalone server on ports 80 and 443. Other valid values might be `apache2`, or any other serivce that might use these ports.
 ```yaml
-certbot_create_standalone_stop_services:
+certbot_services_to_stop:
   - nginx
+certbot_containers_to_stop:
+  - my-web-server
 ```
 These services will only be stopped the first time a new cert is generated.
 
